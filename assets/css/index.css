@@ -1,0 +1,458 @@
+.content_box{
+    width: 1020px;
+    padding: 161px 0 105px;
+    margin: 0 auto;
+}
+
+/* 楼层 */
+
+.floor_box{
+    width: 720px;
+    float: left;
+}
+.floor_box .floor_list{
+    background: rgba(255, 255, 255, .3);
+    width: 100%;
+    box-shadow: rgba(198, 81, 70, .2) 2px 2px 2px;
+}
+.floor_box .floor_list li{
+    border-bottom: rgba(198, 81, 70, .3) 1px solid;
+    border-left: rgba(198, 81, 70, .3) 1px solid;
+    padding: 20px;
+    width: 100%;
+}
+.floor_box .floor_list .userbox{
+    width: 100%;
+    margin-bottom: 20px;
+}
+.floor_box .floor_list .userbox .userimg{
+    float: left;
+    position: relative;
+}
+.floor_box .floor_list .userbox .userimg .img{
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+.floor_box .floor_list .userbox .userimg .userimgborder{
+    position: absolute;
+    bottom: -3px;
+    left: 28px;
+    width: 25px;
+    height: 25px;
+    background: url("../../images/age.png") center no-repeat;
+    background-size: contain;
+}
+.floor_box .floor_list .userbox .username{
+    width: 60%;
+    float: left;
+    font-size: 16px;
+    line-height: 45px;
+    margin-left: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.floor_box .floor_list .userbox .floor{
+    float: right;
+    /* color: #FADAD8; */
+}
+.floor_box .floor_list .content{
+    color: #AF4034;
+    margin-left: 60px;
+    margin-right: 60px;
+    /* text-indent: 2em; */
+}
+.floor_box .floor_list .date{
+    float: right;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+/* 红包轮播 */
+
+.radline_box{
+    position: fixed;
+    left: 0;
+    bottom: 106px;
+    width: 100%;
+    text-align: center;
+    background: rgba(198, 81, 70, .3);
+    font-size: 12px;
+    color: #AF4034;
+    overflow: hidden;
+    height: 39px;
+    line-height: 39px;
+}
+.radline_box ul{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+
+/* 规则 */
+
+.rule_box{
+    width: 300px;
+    position: fixed;
+    right: calc(50% - 510px);
+    box-shadow: rgba(198, 81, 70, .2) 2px 2px 2px;
+    padding: 20px;
+    background: rgba(255, 255, 255, .3);
+    transition: .3s all;
+    padding-right: 5px;
+}
+.rule_box .text_box{
+    height: 200px;
+    overflow-y: scroll;
+}
+.rule_box .text_box::-webkit-scrollbar{
+    width: 3px;
+}
+.rule_box .text_box::-webkit-scrollbar-thumb{
+    background: #EC6A5C;
+    border-radius: 10px;
+}
+.rule_box .title{
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.rule_box .textbox{
+    margin-bottom: 10px;
+}
+.rule_box .textbox p span{
+    font-weight: 700;
+}
+.rule_box .text_box .img{
+    cursor: pointer;
+}
+.rule_btn{
+    position: fixed;
+    right: -25px;
+    cursor: pointer;
+    bottom: 30%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    background: #EC6A5C;
+    color: #fff;
+    transition: .2s all;
+    display: none;
+}
+.rule_btn i{
+    font-size: 30px;
+}
+.rule_btn p{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+.rule_btn.action{
+    right: 0;
+}
+
+/* 排行榜 */
+
+.toplist_box{
+    width: 300px;
+    position: fixed;
+    top: 449px;
+    right: calc(50% - 510px);
+    box-shadow: rgba(198, 81, 70, .2) 2px 2px 2px;
+    padding: 20px;
+    background: rgba(255, 255, 255, .3);
+    padding-right: 5px;
+    transition: .3s all;
+}
+.toplist_box .toplist{
+    height: 200px;
+    overflow-y: scroll;
+    padding-right: 15px;
+}
+.toplist_box .toplist::-webkit-scrollbar{
+    width: 3px;
+}
+.toplist_box .toplist::-webkit-scrollbar-thumb{
+    background: #EC6A5C;
+    border-radius: 10px;
+}
+.toplist_box .title{
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+}
+.toplist_box .toplist li{
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: rgba(198, 81, 70, .3) 1px solid;
+    line-height: 30px;
+}
+.toplist_box .toplist .userimg{
+    width: 30px;
+    height: 30px;
+    float: left;
+    margin-right: 10px;
+    position: relative;
+}
+.toplist_box .toplist li:first-child .userimg::before,.toplist_box .toplist li:nth-child(2) .userimg::before{
+    content: "1";
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 18px;
+    height: 18px;
+    color: #AF4034;
+    font-size: 12px;
+    line-height: 13px;
+    border-radius: 50%;
+    border: #AF4034 2px solid;
+    background: #ffede5;
+    font-weight: 700;
+    z-index: 9;
+    text-align: center;
+}
+.toplist_box .toplist li:nth-child(2) .userimg::before{
+    content: "2";
+    color: #EC6A5C;
+    border-color: #EC6A5C;
+}
+.toplist_box .toplist li:last-child{
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+.toplist_box .toplist .username{
+    width: 50%;
+    float: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.toplist_box .toplist .floornum{
+    float: right;
+}
+.toplist_btn{
+    position: fixed;
+    right: -25px;
+    cursor: pointer;
+    bottom: 20%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    text-align: center;
+    background: #EC6A5C;
+    color: #fff;
+    transition: .2s all;
+    display: none;
+}
+.toplist_btn i{
+    font-size: 30px;
+}
+.toplist_btn p{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+}
+.toplist_btn.action{
+    right: 0;
+}
+
+/* 抢楼 */
+
+.btn_box{
+    width: 100%;
+    position: fixed;
+    background: #ffede5;
+    box-shadow: rgba(198, 81, 70, .2) -2px -2px 2px;
+    padding: 20px 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+    text-align: center;
+}
+.btn_box .box{
+    width: 1020px;
+    margin: 0 auto;
+    position: relative;
+}
+.btn_box .box .tip{
+    float: left;
+}
+.btn_box .box .tip .text{
+    font-size: 12px;
+}
+.btn_box .box .share_m{
+    display: none;
+    float: left;
+}
+.btn_box .box .btn{
+    position: absolute;
+    top: 5px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 30%;
+    height: 50px;
+    background: #C65146;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 50px;
+    border-radius: 50px;
+}
+.btn_box .box .money{
+    float: right;
+    line-height: 30px;
+    position: relative;
+    text-align: left;
+}
+.btn_box .box .money .text{
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    left: -4em;
+}
+.btn_box .box .money i{
+    font-size: 30px;
+    float: left;
+}
+.btn_box .box .money span{
+    color: #AF4034;
+    font-size: 20px;
+}
+.btn_box .box .money_m{
+    float: right;
+    margin-right: 5%;
+    font-size: 14px;
+    display: none;
+}
+.btn_box .box .money_m .am-dropdown-content{
+    padding: 10px;
+    min-width: 120px;
+}
+.btn_box .box .money_m .showbtn{
+    font-size: 30px;
+    line-height: 29px;
+    float: right;
+    color: #AF4034;
+}
+.btn_box .box .money_m .moneybox .num{
+    margin-left: 2em;
+}
+.btn_box .box .money_m .moneybox .num i{
+    /* text-align: right; */
+    font-size: 20px;
+    line-height: 19px;
+}
+
+@media screen and (max-width: 640px){
+    #box{
+        font-size: 12px;
+    }
+    .content_box{
+        padding: 100px 0 88px;
+        width: 100%;
+    }
+    .floor_box{
+        width: 100%;
+    }
+    .floor_box .floor_list li{
+        padding: 10px;
+        border-left: none;
+    }
+    .floor_box .floor_list .userbox{
+        margin-bottom: 10px;
+    }
+    .floor_box .floor_list .userbox .userimg .img{
+        width: 35px;
+        height: 35px;
+    }
+    .floor_box .floor_list .userbox .userimg .userimgborder{
+        width: 20px;
+        height: 20px;
+        left: 20px;
+    }
+    .floor_box .floor_list .userbox .username{
+        margin-left: 10px;
+        font-size: 14px;
+        line-height: 35px;
+    }
+    .floor_box .floor_list .userbox .floor{
+        line-height: 35px;
+    }
+    .floor_box .floor_list .content{
+        margin-left: 45px;
+        margin-right: 45px;
+    }
+    .floor_box .floor_list .date{
+        margin-top: 10px;
+    }
+    .btn_box{
+        padding: 15px 0;
+    }
+    .btn_box .box{
+        width: 100%;
+    }
+    .btn_box .box .tip{
+        display: none;
+    }
+    .btn_box .box .share_m{
+        display: block;
+        margin-left: 5%;
+        margin-top: 5.5px;
+    }
+    .btn_box .box .btn{
+        width: 50%;
+        font-size: 18px;
+        line-height: 30px;
+        border-radius: 30px;
+        height: 30px;
+        top: 0;
+    }
+    .btn_box .box .money{
+        display: none;
+    }
+    .btn_box .box .money_m{
+        display: block;
+    }
+    .radline_box{
+        bottom: 60px;
+        height: 29px;
+        line-height: 29px;
+    }
+    .rule_box{
+        width: 90%;
+        right: -90%;
+        opacity: 0;
+        background: rgba(253, 247, 243, 1);
+        box-shadow: rgba(198, 81, 70, .2) -2px 2px 2px;
+    }
+    .rule_box.action{
+        opacity: 1;
+        right: 0;
+    }
+    .rule_btn,.toplist_btn{
+        display: block;
+    }
+    .toplist_box{
+        width: 90%;
+        right: -90%;
+        top: 100px;
+        opacity: 0;
+        background: rgba(253, 247, 243, 1);
+        box-shadow: rgba(198, 81, 70, .2) -2px 2px 2px;
+    }
+    .toplist_box.action{
+        opacity: 1;
+        right: 0;
+    }
+}

@@ -131,7 +131,7 @@ var getFloor = (function(mod){
     function _ajax(type, url, data, callback){
         $.ajax({
             type: type,
-            url: 'http://localhost:8090'+url,
+            url: 'http://localhost:8085'+url,
             data: data,
             success: function (data) {
                 callback(data)

@@ -131,7 +131,7 @@ var getFloor = (function(mod){
     function _ajax(type, url, data, callback){
         $.ajax({
             type: type,
-            url: url,
+            url: 'http://139.159.146.159:8085'+url,
             data: data,
             success: function (data) {
                 callback(data)

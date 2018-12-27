@@ -1,146 +1,235 @@
-function callback(data){
+function callback(data) {
     console.log(data);
 }
 
-var getFloor = (function(mod){
+var getFloor = (function (mod) {
 
     var app = {}
     var _userInfo = {}
 
-    app.get = function(url,data,callback){
-        _ajax('get',url,data,callback)
+    app.get = function (url, data, cb) {
+        _ajax('get', url, data, cb)
     }
-    app.post = function(url,data,callback){
-        _ajax('post',url,data,callback)
+    app.post = function (url, data, cb) {
+        _ajax('post', url, data, cb)
     }
-    
-    mod.setToken = function(data){
-        if(typeof data === 'Object' || typeof data === 'object'){
+
+    mod.setToken = function (data) {
+        if (typeof data === 'Object' || typeof data === 'object') {
             var a = location.href
+            if(a.indexOf('?') == -1) return ;
             var index1 = a.indexOf('token')
             var index2 = a.indexOf('&')
             var b = a.substring(index1+6,index2)
             data.number =b
             _userInfo = data
             saveUserInfo(data)
-            localStorage.setItem('user_info',JSON.stringify(data))
-        }else{
-            localStorage.setItem('user_info','')
+            localStorage.setItem('user_info', JSON.stringify(data))
+        } else {
+            localStorage.setItem('user_info', '')
         }
     }
 
-    mod.getToken = function(){
+    mod.getToken = function () {
         var str = localStorage.getItem('user_info')
         _userInfo = JSON.parse(str)
-        return  str ? JSON.parse(str) : false
+        return str ? JSON.parse(str) : false
     }
 
-    mod.floor = function(){
-        app.post('/getfloor',_userInfo,function(data){
-            $('.floor_money').html(data.data.money.toFixed(2) + '元')
-            $('.get_floors').html(data.data.floor + '楼')
-            console.log(data.data.money);
+    mod.floor = function () {
+        if(!_userInfo.number){
+            return tipMessage('请先登录')
+        }
+        app.post('/getfloor', _userInfo, function (data) {
+            if(data.success){
+                $('.floor_money').html(data.data.money.toFixed(2) + '元')
+                $('.get_floors').html(data.data.floor + '楼')
+            }else{
+                tipMessage(data.message)
+            }
         })
     }
 
-    mod.share = function(){
-        console.log('分享');
-        app.post('/share', _userInfo, function(data){
-            console.log(data.message);
-        })
-    }
-
-    mod.init = function(){
-        app.post('/queryFloor', _userInfo, function(data){
+    mod.share = function () {
+        if(!_userInfo.number){
+            return tipMessage('请先登录')
+        }
+        qZone()
+        app.post('/share', _userInfo, function (data) {
             if(!data.success){
+                tipMessage(data.message)
+            }
+        })
+    }
+
+    mod.init = function () {
+        this.moneyList()
+        this.rank()
+        app.get('/queryFloor', {}, function (data) {
+            if (!data.success) {
                 return;
             }
             var arr = data.data.list;
             var str = ''
-            for(var i=0;i<arr.length;i++){
-                str += '<li class="am-cf">'
-                        +'<div class="userbox am-cf">'
-                            +'<div class="userimg">'
-                                +'<img  class="img" src="'+arr[i].image+'"/>'
-                                +'<div class="userimgborder"></div>'
-                            +'</div>'
-                            +'<p class="username">'+arr[i].name+'</p>'
-                            +'<p class="floor">'+arr[i].number+' 楼</p>'
-                        +'</div>'
-                        +'<p class="content">诡梦墙、原创短文墙携列表各位乡亲父老，在这特殊的日子里，给大伙儿送个祝福！祝大家在2019年，大吉大利，天天吃鸡！也祝各位老板在新的一年里，万事如意，心想事成！谢谢各位老板对墙君的支持，希望来年咱们也能继续相亲相爱！</p>'
-                        +'<p class="date">'+arr[i].create_time+'</p>'
-                        +'</li>'
+            for (var i = 0; i < arr.length; i++) {
+                str += '<li class="am-cf">' +
+                    '<div class="userbox am-cf">' +
+                    '<div class="userimg">' +
+                    '<img  class="img" src="' + arr[i].image + '"/>' +
+                    '<div class="userimgborder"></div>' +
+                    '</div>' +
+                    '<p class="username">' + arr[i].name + '</p>' +
+                    '<p class="floor">' + arr[i].number + ' 楼</p>' +
+                    '</div>' +
+                    '<p class="content">诡梦墙、原创短文墙携列表各位乡亲父老，在这特殊的日子里，给大伙儿送个祝福！祝大家在2019年，大吉大利，天天吃鸡！也祝各位老板在新的一年里，万事如意，心想事成！谢谢各位老板对墙君的支持，希望来年咱们也能继续相亲相爱！</p>' +
+                    '<p class="date">' + arr[i].create_time + '</p>' +
+                    '</li>'
             }
-            $('.floor_money').html(data.data.money.toFixed(2) + '元')
-            $('.get_floors').html(data.data.floor + '楼')
+            
             $('#floor_items').html(str)
         })
-        this.moneyList()
-        this.rank()
+
+        if(!_userInfo) return;
+
+        if(!_userInfo.number){
+            return tipMessage('请先登录')
+        }
+
+        app.post('/getUserInfo', _userInfo,).then(function(data){
+            $('.floor_money').html(data.data.money.toFixed(2) + '元')
+            $('.get_floors').html(data.data.floor + '楼')
+        })
+        
     }
-    
-    mod.moneyList = function(){
-        app.get('/getMoneyList', {}, function(data){
-            if(data.success){
+
+    mod.moneyList = function () {
+        app.get('/getMoneyList', {}, function (data) {
+            if (data.success) {
                 var arr = data.data
                 var str = ''
-                for(var i=0;i<arr.length;i++){
-                    str = '<li>'
-                            +'<p>'
-                                +'<span>'+arr[i].name+'</span>'
-                                +' 获得 '
-                                +'<span>'+arr[i].name+'元</span>'
-                                +' 现金红包'
-                            +'</p>'
-                        +'</li>'
+                for (var i = 0; i < arr.length; i++) {
+                    str += '<li>' +
+                        '<p>' +
+                        '<span>' + arr[i].name + '</span>' +
+                        ' 获得 ' +
+                        '<span>' + arr[i].money + '元</span>' +
+                        ' 现金红包' +
+                        '</p>' +
+                        '</li>'
                 }
                 $('#red_list').html(str)
+                //数字跳动
+                var scrollIndex = 0;
+                var Timer = null;
+                clearInterval(Timer);
+                var ul = $(".radline_box ul");
+                var li = ul.children("li");
+                var h = li.height();
+                ul.css("height", h * li.length * 2);
+                ul.html(ul.html() + ul.html());
+
+                function run() {
+                    if (scrollIndex >= li.length) {
+                        ul.css({
+                            top: 0
+                        });
+                        scrollIndex = 1;
+                        ul.animate({
+                            top: -scrollIndex * h
+                        }, 100);
+                    } else {
+                        scrollIndex++;
+                        ul.animate({
+                            top: -scrollIndex * h
+                        }, 100);
+                    }
+                }
+                Timer = setInterval(run, 3000);
             }
         })
     }
 
-    mod.rank = function(){
-        app.get('/getRank', {}, function(data){
-            if(data.success){
+    mod.rank = function () {
+        app.get('/getRank', {}, function (data) {
+            if (data.success) {
                 var arr = data.data
                 var str = ''
-                for(var i=0;i<arr.length;i++){
-                    str = '<li>'
-                            +'<div>'
-                                +'<img src="'+arr[i].img+'" class="userimg" />'
-                            +'</div>'
-                            +'<p class="username">'+arr[i].name+'</p>'
-                            +'<p class="floornum">'+arr[i].floor+'</p>'
-                        +'</li>'
+                for (var i = 0; i < arr.length; i++) {
+                    str = '<li>' +
+                        '<div>' +
+                        '<img src="' + arr[i].img + '" class="userimg" />' +
+                        '</div>' +
+                        '<p class="username">' + arr[i].name + '</p>' +
+                        '<p class="floornum">' + arr[i].floor + '</p>' +
+                        '</li>'
                 }
                 $('#floor_rank').html(str)
             }
         })
     }
+    
+    mod.checkImg = function(type){
+        var src = type == 1 ? 'http://getfloor.lieqidao.club/images/banner_03.png' : 'http://getfloor.lieqidao.club/images/logo_03.png'
+        $('#prize_img img').attr('src',src)
+        $('#prize_img').modal('open')
+    }
 
-    function saveUserInfo(data){
-        app.post('/saveuserInfo', data, function(data){
-            if(data.success){
+    function tipMessage(msg){
+        $('#message').text(msg)
+        $('#top_message_modal').modal('open')
+    }
+
+    function saveUserInfo(data) {
+        app.post('/saveuserInfo', data, function (data) {
+            if (data.success) {
                 console.log('保存成功');
-            }else{
-                console.log('保存失败'+data.message);
+            } else {
+                console.log('保存失败' + data.message);
             }
         })
     }
 
-    function _ajax(type, url, data, callback){
+    function qZone() {
+        var p = {
+            url: 'getfloor.lieqidao.club',
+            showcount: '0',
+            /*是否显示分享总数,显示：'1'，不显示：'0' */
+            desc: '「诡梦墙」&「原创短文墙」请你来抢红包啦！',
+            /*默认分享理由(可选)*/
+            summary: '',
+            /*分享摘要(可选)*/
+            title: '2018元旦抢楼活动',
+            /*分享标题(可选)*/
+            site: 'getfloor.lieqidao.club',
+            /*分享来源 如：腾讯网(可选)summary*/
+            pics: 'getfloor.lieqidao.club/images/banner_03.png',
+            /*分享图片的路径(可选)*/
+            style: '',
+            width: 199,
+            height: 30
+        };
+        var s = [];
+        for (var i in p) {
+            s.push(i + '=' + encodeURIComponent(p[i] || ''));
+        }
+        var target_url =
+            "http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?" + s.join('&');
+        window.open(target_url, 'qZone',
+            'height=430, width=400');
+    }
+
+    function _ajax(type, url, data, callback) {
         $.ajax({
             type: type,
-            url: 'http://139.159.146.159:8085'+url,
+            url: 'http://localhost:8085' + url,
             data: data,
             success: function (data) {
                 callback(data)
             },
-            error(data){
+            error(data) {
                 console.log(data);
             }
         });
     }
     return mod
 })(window.getFloor || {})
-

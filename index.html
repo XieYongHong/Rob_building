@@ -66,7 +66,7 @@
         <p class="title">活动规则</p>
         <div class="text_box">
           <div class="textbox">
-            <p><span>活动时间：</span>即日起-2019年1月1日晚8点</p>
+            <p><span>活动时间：</span>2018年12月29日晚8点-2019年1月1日晚8点</p>
           </div>
           <div class="textbox">
             <p><span>领奖时间：</span>活动结束后7天之内</p>
@@ -77,13 +77,14 @@
           <div class="textbox">
             <p><span>活动规则：</span></p>
             <p>1.进入活动网址，使用QQ号登录，点击“抢楼”按钮进行抢楼，按在活动时间内抢得楼层数排名</p>
-            <p>2.每人每天最多可抢20楼，从页面内分享活动可获得额外10楼暴击（每日一次机会）</p>
+            <p>2.每人每天最多可抢20楼，从页面内分享活动可获得额外10次抢楼机会（每日一次机会）</p>
             <p>3.活动时间内抢得楼层数第一名优先选择奖品，若第一名三天内未选择则由第二名先选</p>
+            <p>4.参加活动需先加「诡梦墙」和「原创短文墙」为好友，否则视为放弃所有奖励</p>
           </div>
           <div class="textbox">
             <p><span>活动奖项：</span></p>
-            <p>1.抢楼有概率获得随机金额的现金红包，活动结束后统一领取</p>
-            <p>2.抢得楼层数排名前二奖品为25款<span class="img">捕梦网</span>择1、<span class="img">古风彩墨/24节气彩墨礼盒装</span>共4款择1（点击查看奖品预览图）</p>
+            <p>1.抢楼有概率获得随机金额的现金红包，活动结束后重新打开页面，凭借发放的领奖码在「诡梦墙」统一领取</p>
+            <p>2.抢得楼层数排名前二奖品为25款<span class="img" onclick="getFloor.checkImg(0)">捕梦网</span>择1、<span onclick="getFloor.checkImg(1)" class="img">古风彩墨/24节气彩墨礼盒装</span>共4款择1（点击查看奖品预览图）</p>
           </div>
           <div class="textbox">
             <p><span>**特别彩蛋**</span></p>
@@ -126,7 +127,7 @@
       <div class="box am-cf">
         <div class="tip">
           <p class="text">分享活动到空间，额外获得10次抢楼机会</p>
-          <a class="share" href="" onclick="getFloor.share()">点我分享 <span class="am-icon-share-alt"></span></a>
+          <a class="share" href="javascript:;" onclick="getFloor.share()">点我分享 <span class="am-icon-share-alt"></span></a>
         </div>
         <a class="share_m" href="javascript:;" onclick="getFloor.share()">分享 <span class="am-icon-share-alt"></span></a>
         <a class="btn" onclick="getFloor.floor()" href="javascript:;">抢楼！！</a>
@@ -149,7 +150,31 @@
     <!-- 弹窗 -->
     <div class="am-modal am-modal-no-btn am-modal-loading" tabindex="-1" id="doc-modal-1">
       <div class="am-modal-dialog">
-        <span id="qq_login"></span>
+        <div class="login-content">
+          <span>请使用qq登录</span>
+          <span id="qq_login"></span>
+        </div>
+      </div>
+    </div>
+    <!-- 弹窗结束 -->
+    <!-- 弹窗 -->
+      <div class="am-modal am-modal-alert" tabindex="-1" id="top_message_modal">
+        <div class="am-modal-dialog">
+          <div class="am-modal-bd" id="message">
+            
+          </div>
+          <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+          </div>
+        </div>
+      </div>
+    <!-- 弹窗结束 -->
+    <!-- 弹窗  -->
+    <div class="am-modal am-modal-no-btn am-modal-loading" tabindex="-1" id="prize_img">
+      <div class="am-modal-dialog">
+        <div class="am-modal-bd">
+          <img src="" alt="">
+        </div>
       </div>
     </div>
     <!-- 弹窗结束 -->
@@ -166,33 +191,9 @@
     ></script>
     <script src="assets/js/app.js"></script>
   <script>
-    //数字跳动
-    var scrollIndex = 0;
-    var Timer = null;
-    clearInterval(Timer);
-    var ul = $(".radline_box ul");
-    var li = ul.children("li");
-    var h = li.height();
-    ul.css("height", h * li.length * 2);
-    ul.html(ul.html() + ul.html());
+    
 
-    function run() {
-      if (scrollIndex >= li.length) {
-        ul.css({
-          top: 0
-        });
-        scrollIndex = 1;
-        ul.animate({
-          top: -scrollIndex * h
-        }, 100);
-      } else {
-        scrollIndex++;
-        ul.animate({
-          top: -scrollIndex * h
-        }, 100);
-      }
-    }
-    Timer = setInterval(run, 3000);
+    
 
     //侧边按钮
     function btn_action(id, btn) {
@@ -205,6 +206,7 @@
       }
     }
     var userInfo = getFloor.getToken()
+    getFloor.init()
     //弹窗调用
     if(!userInfo){
         $("#doc-modal-1").modal('open')
@@ -213,9 +215,9 @@
         },function(data,opts){
           getFloor.setToken(data)
           getFloor.init()
+          $("#doc-modal-1").modal('close')
         })
       }else{
-        getFloor.init()
         $("#doc-modal-1").modal('close')
     }
   </script>

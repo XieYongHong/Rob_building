@@ -17,7 +17,6 @@ var getFloor = (function (mod) {
     mod.setToken = function (data) {
         if (typeof data === 'Object' || typeof data === 'object') {
             var a = location.href
-            if(a.indexOf('?') == -1) return ;
             var index1 = a.indexOf('token')
             var index2 = a.indexOf('&')
             var b = a.substring(index1+6,index2)

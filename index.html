@@ -205,11 +205,11 @@
         $(id).addClass("action")
       }
     }
-    $("#doc-modal-1").modal('open')
     var userInfo = getFloor.getToken()
     getFloor.init()
     //弹窗调用
     if(!userInfo){
+      $("#doc-modal-1").modal('open')
         QC.Login({
           btnId:'qq_login'
         },function(data,opts){

@@ -116,6 +116,7 @@ img{
     padding: 30px;
 }
 
+
 @media screen and (max-width: 640px){
     .header_box{
         height: 100px;

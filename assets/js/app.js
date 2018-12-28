@@ -16,11 +16,11 @@ var getFloor = (function (mod) {
 
     mod.setToken = function (data) {
         if (typeof data === 'Object' || typeof data === 'object') {
-            var a = location.href
-            var index1 = a.indexOf('token')
-            var index2 = a.indexOf('&')
-            var b = a.substring(index1+6,index2)
-            data.number =b
+            // var a = location.href
+            // var index1 = a.indexOf('token')
+            // var index2 = a.indexOf('&')
+            // var b = a.substring(index1+6,index2)
+            // data.number =b
             _userInfo = data
             saveUserInfo(data)
             localStorage.setItem('user_info', JSON.stringify(data))
@@ -43,9 +43,25 @@ var getFloor = (function (mod) {
             if(data.success){
                 $('.floor_money').html(data.data.money.toFixed(2) + '元')
                 $('.get_floors').html(data.data.floor + '楼')
+                var code = data.code
+                if(code == 9){
+                    tipMessage(data.message)
+                }
+                
+                if(data.data.getMoney){
+                    $('#getfloor_money_tip').modal('open')
+                    $('#get_money').text(data.data.getMoney)
+                }
             }else{
-                tipMessage(data.message)
+                if(data.code == 3){
+                    return $('#getfloor_share').modal('open')
+                }else{
+                    tipMessage(data.message)
+                }
             }
+            setTimeout(function(){
+                $('.getfloor-btn').removeClass('un-active');
+            },2000)
         })
     }
 
@@ -62,6 +78,7 @@ var getFloor = (function (mod) {
     }
 
     mod.init = function () {
+        domInit()
         this.moneyList()
         this.rank()
         app.get('/queryFloor', {}, function (data) {
@@ -159,7 +176,7 @@ var getFloor = (function (mod) {
                 var arr = data.data
                 var str = ''
                 for (var i = 0; i < arr.length; i++) {
-                    str = '<li>' +
+                    str += '<li>' +
                         '<div>' +
                         '<img src="' + arr[i].img + '" class="userimg" />' +
                         '</div>' +
@@ -173,9 +190,19 @@ var getFloor = (function (mod) {
     }
     
     mod.checkImg = function(type){
-        var src = type == 1 ? 'http://getfloor.lieqidao.club/images/banner_03.png' : 'http://getfloor.lieqidao.club/images/logo_03.png'
+        var src = type == 0 ? 'images/meng.jpg' : 'images/mo.jpg'
         $('#prize_img img').attr('src',src)
         $('#prize_img').modal('open')
+    }
+
+    function domInit(){
+        $('.getfloor-btn').on('click',function(){
+            var classType = $(this).hasClass('un-active');
+            if(!classType){
+                getFloor.floor()
+                $(this).addClass('un-active');
+            }
+        })
     }
 
     function tipMessage(msg){
@@ -225,8 +252,8 @@ var getFloor = (function (mod) {
     function _ajax(type, url, data, callback) {
         $.ajax({
             type: type,
-            // url: 'http://localhost:8085' + url,
-            url: 'http://139.159.146.159:8085' + url,
+            url: 'http://localhost:8085' + url,
+            // url: 'http://139.159.146.159:8085' + url,
             data: data,
             success: function (data) {
                 callback(data)

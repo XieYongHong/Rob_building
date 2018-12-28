@@ -94,7 +94,7 @@ var getFloor = (function (mod) {
             return tipMessage('请先登录')
         }
 
-        app.post('/getUserInfo', _userInfo,).then(function(data){
+        app.post('/getUserInfo', _userInfo,function(data){
             if(data.success){
                 $('.floor_money').html(data.data.money.toFixed(2) + '元')
                 $('.get_floors').html(data.data.floor + '楼')
@@ -225,8 +225,8 @@ var getFloor = (function (mod) {
     function _ajax(type, url, data, callback) {
         $.ajax({
             type: type,
-            // url: 'http://localhost:8085' + url,
-            url: 'http://139.159.146.159:8085' + url,
+            url: 'http://localhost:8085' + url,
+            // url: 'http://139.159.146.159:8085' + url,
             data: data,
             success: function (data) {
                 callback(data)

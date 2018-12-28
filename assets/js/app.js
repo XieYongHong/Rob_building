@@ -95,8 +95,13 @@ var getFloor = (function (mod) {
         }
 
         app.post('/getUserInfo', _userInfo,).then(function(data){
-            $('.floor_money').html(data.data.money.toFixed(2) + '元')
-            $('.get_floors').html(data.data.floor + '楼')
+            if(data.success){
+                $('.floor_money').html(data.data.money.toFixed(2) + '元')
+                $('.get_floors').html(data.data.floor + '楼')
+            }else{
+                $('.floor_money').html('0.00元')
+                $('.get_floors').html('0楼')
+            }
         })
         
     }

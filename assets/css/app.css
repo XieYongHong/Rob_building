@@ -1,5 +1,7 @@
 /* 共用样式 */
-
+body,html{
+    height: 100%;
+}
 #box{
     position: relative;
     font-size: 14px;
@@ -7,6 +9,7 @@
     background: rgba(253, 247, 243, 1);
     transition: all .3s;
     overflow: hidden;
+    min-height: 100%;
 }
 p,ul,li{
     padding: 0 0 0 0;

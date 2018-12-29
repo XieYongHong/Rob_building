@@ -3,7 +3,7 @@ function callback(data) {
 }
 
 var getFloor = (function (mod) {
-
+    var status = true
     var app = {}
     var _userInfo = {}
 
@@ -36,42 +36,46 @@ var getFloor = (function (mod) {
     }
 
     mod.floor = function () {
-        if(!_userInfo.number){
+        if (!_userInfo.number) {
             return tipMessage('请先登录')
         }
+        if(!status){
+            $(".getfloor-btn").removeClass('un-active');
+            $('#prize_code_modal').modal('open')
+            $('#prize_code').text(_userInfo.number)
+            return 
+        }
         app.post('/getfloor', _userInfo, function (data) {
-            if(data.success){
+            _time()
+            if (data.success) {
                 $('.floor_money').html(data.data.money.toFixed(2) + '元')
                 $('.get_floors').html(data.data.floor + '楼')
                 var code = data.code
-                if(code == 9){
+                if (code == 9) {
                     tipMessage(data.message)
                 }
-                
-                if(data.data.getMoney){
-                    $('#getfloor_money_tip').modal('open')
-                    $('#get_money').text(data.data.getMoney)
+
+                if (data.data.getMoney) {
+                    tip('中奖啦！！获得 '+data.data.getMoney+ '元')
                 }
-            }else{
-                if(data.code == 3){
+            } else {
+                if (data.code == 3) {
                     return $('#getfloor_share').modal('open')
-                }else{
+                } else {
                     tipMessage(data.message)
                 }
             }
-            setTimeout(function(){
-                $('.getfloor-btn').removeClass('un-active');
-            },2000)
+
         })
     }
 
     mod.share = function () {
-        if(!_userInfo.number){
+        if (!_userInfo.number) {
             return tipMessage('请先登录')
         }
         qZone()
         app.post('/share', _userInfo, function (data) {
-            if(!data.success){
+            if (!data.success) {
                 tipMessage(data.message)
             }
         })
@@ -83,7 +87,7 @@ var getFloor = (function (mod) {
         this.rank()
         app.get('/queryFloor', {}, function (data) {
             if (!data.success) {
-                return;
+                return tipMessage(data.message);
             }
             var arr = data.data.list;
             var str = ''
@@ -101,26 +105,29 @@ var getFloor = (function (mod) {
                     '<p class="date">' + arr[i].create_time + '</p>' +
                     '</li>'
             }
-            
+            if(data.data.code == 9){
+                status = false
+                $('.getfloor-btn').text('查看领奖码')
+            }
             $('#floor_items').html(str)
         })
 
-        if(!_userInfo) return;
+        if (!_userInfo) return;
 
-        if(!_userInfo.number){
+        if (!_userInfo.number) {
             return tipMessage('请先登录')
         }
 
-        app.post('/getUserInfo', _userInfo,function(data){
-            if(data.success){
+        app.post('/getUserInfo', _userInfo, function (data) {
+            if (data.success) {
                 $('.floor_money').html(data.data.money.toFixed(2) + '元')
                 $('.get_floors').html(data.data.floor + '楼')
-            }else{
+            } else {
                 $('.floor_money').html('0.00元')
                 $('.get_floors').html('0楼')
             }
         })
-        
+
     }
 
     mod.moneyList = function () {
@@ -188,24 +195,38 @@ var getFloor = (function (mod) {
             }
         })
     }
-    
-    mod.checkImg = function(type){
+
+    mod.checkImg = function (type) {
         var src = type == 0 ? 'images/meng.jpg' : 'images/mo.jpg'
-        $('#prize_img img').attr('src',src)
+        $('#prize_img img').attr('src', src)
         $('#prize_img').modal('open')
     }
 
-    function domInit(){
-        $('.getfloor-btn').on('click',function(){
+    function tip(text) {
+        $("#box").append('<div id="tip">' + text + '</div>');
+        $("#tip").css({
+            "opacity": 1,
+            "z-index": 999999,
+        })
+        setTimeout(function () {
+            $("#tip").css({
+                "opacity": 0,
+                "z-index": 0
+            })
+        }, 2000)
+    }
+
+    function domInit() {
+        $('.getfloor-btn').on('click', function () {
             var classType = $(this).hasClass('un-active');
-            if(!classType){
+            if (!classType) {
                 getFloor.floor()
                 $(this).addClass('un-active');
             }
         })
     }
 
-    function tipMessage(msg){
+    function tipMessage(msg) {
         $('#message').text(msg)
         $('#top_message_modal').modal('open')
     }
@@ -218,6 +239,28 @@ var getFloor = (function (mod) {
                 console.log('保存失败' + data.message);
             }
         })
+    }
+    //倒计时
+    function _time() {
+        var countDown = 3;
+        //默认样式
+        (function settime() {
+            if (countDown == 0) {
+                countDown = 3;
+                classChange();
+            } else {
+                $(".getfloor-btn").text(countDown + "s");
+                --countDown;
+                setTimeout(function () {
+                    settime()
+                }, 1000)
+            }
+        })()
+
+        function classChange() { //时间到了后，改变样式
+            $(".getfloor-btn").text("抢楼！！");
+            $(".getfloor-btn").removeClass('un-active');
+        }
     }
 
     function qZone() {

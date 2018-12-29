@@ -126,7 +126,8 @@
     <div class="btn_box">
       <div class="box am-cf">
         <div class="tip">
-          <p class="text">分享活动到空间，额外获得10次抢楼机会</p>
+          <p class="text">分享活动到空间，
+            额外获得10次抢楼机会</p>
           <a class="share" href="javascript:;" onclick="getFloor.share()">点我分享 <span class="am-icon-share-alt"></span></a>
         </div>
         <a class="share_m" href="javascript:;" onclick="getFloor.share()">分享 <span class="am-icon-share-alt"></span></a>
@@ -206,8 +207,20 @@
       </div>
     </div>
     <!-- 弹窗结束 -->
+    <!-- 弹窗  -->
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="prize_code_modal">
+        <div class="am-modal-dialog">
+          <div class="am-modal-hd">
+              领奖码
+              <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+          </div>
+          <div class="am-modal-bd" id="prize_code">
+            
+          </div>
+        </div>
+      </div>
+      <!-- 弹窗结束 -->
   </div>
-
   <!--[if (gte IE 9)|!(IE)]><!-->
   <script src="assets/js/jquery.min.js"></script>
   <script src="assets/js/amazeui.min.js"></script>
@@ -219,9 +232,6 @@
     ></script>
     <script src="assets/js/app.js"></script>
   <script>
-    
-
-    
 
     //侧边按钮
     function btn_action(id, btn) {

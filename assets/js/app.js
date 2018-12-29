@@ -17,10 +17,17 @@ var getFloor = (function (mod) {
     mod.setToken = function (data) {
         if (typeof data === 'Object' || typeof data === 'object') {
             var a = location.href
-            var index1 = a.indexOf('token')
-            var index2 = a.indexOf('&')
-            var b = a.substring(index1+6,index2)
-            data.number =b
+            var index1 = a.indexOf('?')
+            if(index1 != -1){
+                var b = a.substr(index+1)
+                var c = b.split('&')
+                for(var i=0;i<c.length;i++){
+                    var arr = c[i].split('=')
+                    if(arr[0].indexOf('token') != -1){
+                        data.number = arr[1]
+                    }
+                }
+            }
             _userInfo = data
             saveUserInfo(data)
             localStorage.setItem('user_info', JSON.stringify(data))
@@ -31,12 +38,13 @@ var getFloor = (function (mod) {
 
     mod.getToken = function () {
         var str = localStorage.getItem('user_info')
-        _userInfo = JSON.parse(str)
+        if(str) _userInfo = JSON.parse(str);
         return str ? JSON.parse(str) : false
     }
 
     mod.floor = function () {
         if (!_userInfo.number) {
+            $(".getfloor-btn").removeClass('un-active');
             return tipMessage('请先登录')
         }
         if(!status){
@@ -45,8 +53,9 @@ var getFloor = (function (mod) {
             $('#prize_code').text(_userInfo.number)
             return 
         }
+        _time()
         app.post('/getfloor', _userInfo, function (data) {
-            _time()
+            
             if (data.success) {
                 $('.floor_money').html(data.data.money.toFixed(2) + '元')
                 $('.get_floors').html(data.data.floor + '楼')
@@ -183,8 +192,8 @@ var getFloor = (function (mod) {
                 var arr = data.data
                 var str = ''
                 for (var i = 0; i < arr.length; i++) {
-                    str += '<li>' +
-                        '<div>' +
+                    str += '<li class="am-cf">' +
+                        '<div class="userimg">' +
                         '<img src="' + arr[i].img + '" class="userimg" />' +
                         '</div>' +
                         '<p class="username">' + arr[i].name + '</p>' +
@@ -197,9 +206,11 @@ var getFloor = (function (mod) {
     }
 
     mod.checkImg = function (type) {
-        var src = type == 0 ? 'images/meng.jpg' : 'images/mo.jpg'
-        $('#prize_img img').attr('src', src)
-        $('#prize_img').modal('open')
+        if(type == 0){
+            $('#prize_img_meng').modal('open')
+        }else{
+            $('#prize_img_mo').modal('open')
+        }
     }
 
     function tip(text) {

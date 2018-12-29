@@ -16,11 +16,11 @@ var getFloor = (function (mod) {
 
     mod.setToken = function (data) {
         if (typeof data === 'Object' || typeof data === 'object') {
-            // var a = location.href
-            // var index1 = a.indexOf('token')
-            // var index2 = a.indexOf('&')
-            // var b = a.substring(index1+6,index2)
-            // data.number =b
+            var a = location.href
+            var index1 = a.indexOf('token')
+            var index2 = a.indexOf('&')
+            var b = a.substring(index1+6,index2)
+            data.number =b
             _userInfo = data
             saveUserInfo(data)
             localStorage.setItem('user_info', JSON.stringify(data))

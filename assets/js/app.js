@@ -61,8 +61,9 @@ var getFloor = (function (mod) {
                 $('.get_floors').html(data.data.floor + '楼')
                 var code = data.code
                 if (code == 9) {
-                    tipMessage(data.message)
+                    return tipMessage(data.message)
                 }
+                addfloor()
 
                 if (data.data.getMoney) {
                     tip('中奖啦！！获得 '+data.data.getMoney+ '元')
@@ -211,6 +212,40 @@ var getFloor = (function (mod) {
         }else{
             $('#prize_img_mo').modal('open')
         }
+    }
+    function addfloor(){
+        var floor = $('#floor_items li:first-child .floor').text()
+        var number = Number(floor.substring(0,floor.length-2)) + 1
+        var str = '<li class="am-cf">' +
+        '<div class="userbox am-cf">' +
+        '<div class="userimg">' +
+        '<img  class="img" src="' + _userInfo.figureurl_qq_1 + '"/>' +
+        '<div class="userimgborder"></div>' +
+        '</div>' +
+        '<p class="username">' + _userInfo.nickname + '</p>' +
+        '<p class="floor">' + number + ' 楼</p>' +
+        '</div>' +
+        '<p class="content">诡梦墙、原创短文墙携列表各位乡亲父老，在这特殊的日子里，给大伙儿送个祝福！祝大家在2019年，大吉大利，天天吃鸡！也祝各位老板在新的一年里，万事如意，心想事成！谢谢各位老板对墙君的支持，希望来年咱们也能继续相亲相爱！</p>' +
+        '<p class="date">' + newTime() + '</p>' +
+        '</li>'
+
+        $('#floor_items').prepend(str);
+    }
+
+    function newTime(){
+        var date = new Date();
+        var y = date.getFullYear();
+        var m = date.getMonth() + 1;
+        m = m < 10 ? ('0' + m) : m;
+        var d = date.getDate();
+        d = d < 10 ? ('0' + d) : d;
+        var h = date.getHours();
+        h = h < 10 ? ('0' + h) : h;
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+        minute = minute < 10 ? ('0' + minute) : minute;
+        second = second < 10 ? ('0' + second) : second;
+        return y + '-' + m + '-' + d + ' ' + h + ':' + minute + ':' + second;
     }
 
     function tip(text) {

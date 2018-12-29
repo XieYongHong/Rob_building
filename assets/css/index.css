@@ -476,4 +476,8 @@
         opacity: 1;
         right: 0;
     }
+    #logout{
+        left:10px;
+        bottom:15px;
+    }
 }

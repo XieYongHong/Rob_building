@@ -45,6 +45,7 @@
         <img class="img" src="images/banner_03.png" alt="">
         <p class="title" style="font-family:'chenwixun-jian166047cf121e09f';">2018元旦抢楼活动<span style="font-family:'Jellyka_-_Love_and_Passion';">2018yuandanqianglouhuodong</span></p>
         <img class="logo" src="images/logo_03.png" alt="">
+        <button onclick="logput()" style="position:relative;z-index:99999;">登出</button>
       </div>
     </div>
     <!-- header结束 -->
@@ -269,8 +270,10 @@
           $("#doc-modal-1").modal('close')
         })
       }else{
-        
         $("#doc-modal-1").modal('close')
+    }
+    function logput(){
+      QC.Login.signOut()
     }
   </script>
 </body>

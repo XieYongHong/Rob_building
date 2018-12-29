@@ -244,7 +244,7 @@
       }
     }
     var userInfo = getFloor.getToken()
-    
+    getFloor.init()
     //弹窗调用
     if(!userInfo){
       $("#doc-modal-1").modal('open')
@@ -252,11 +252,12 @@
           btnId:'qq_login'
         },function(data,opts){
           getFloor.setToken(data)
+          $('#top_message_modal').modal('close')
           getFloor.init()
           $("#doc-modal-1").modal('close')
         })
       }else{
-        getFloor.init()
+        
         $("#doc-modal-1").modal('close')
     }
   </script>

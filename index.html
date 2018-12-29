@@ -257,7 +257,7 @@
       }
     }
     var userInfo = getFloor.getToken()
-    getFloor.init()
+    
     //弹窗调用
     if(!userInfo){
       $("#doc-modal-1").modal('open')
@@ -271,6 +271,7 @@
         })
       }else{
         $("#doc-modal-1").modal('close')
+        getFloor.init()
     }
     function logput(){
       QC.Login.signOut()

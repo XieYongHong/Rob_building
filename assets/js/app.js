@@ -43,6 +43,7 @@ var getFloor = (function (mod) {
     }
 
     mod.floor = function () {
+        _time()
         if (!_userInfo.number) {
             $(".getfloor-btn").removeClass('un-active');
             return tipMessage('请先登录')
@@ -53,7 +54,6 @@ var getFloor = (function (mod) {
             $('#prize_code').text(_userInfo.number)
             return 
         }
-        _time()
         app.post('/getfloor', _userInfo, function (data) {
             
             if (data.success) {

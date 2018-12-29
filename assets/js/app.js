@@ -19,7 +19,7 @@ var getFloor = (function (mod) {
             var a = location.href
             var index1 = a.indexOf('?')
             if(index1 != -1){
-                var b = a.substr(index+1)
+                var b = a.substr(index1+1)
                 var c = b.split('&')
                 for(var i=0;i<c.length;i++){
                     var arr = c[i].split('=')

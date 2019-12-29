@@ -321,11 +321,11 @@ var getFloor = (function (mod) {
             /*默认分享理由(可选)*/
             summary: '',
             /*分享摘要(可选)*/
-            title: '2018元旦抢楼活动',
+            title: '2019元旦抢楼活动',
             /*分享标题(可选)*/
-            site: 'getfloor.lieqidao.club',
+            site: 'http://getfloor.lieqidao.club',
             /*分享来源 如：腾讯网(可选)summary*/
-            pics: 'getfloor.lieqidao.club/images/banner_03.png',
+            pics: 'http://getfloor.lieqidao.club/images/banner_03.png',
             /*分享图片的路径(可选)*/
             style: '',
             width: 199,

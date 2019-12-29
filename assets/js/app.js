@@ -209,7 +209,7 @@ var getFloor = (function (mod) {
     mod.checkImg = function (type) {
         if(type == 0){
             $('#prize_img_meng').modal('open')
-        }else{
+        }else if(type === 1){
             $('#prize_img_mo').modal('open')
         }
     }

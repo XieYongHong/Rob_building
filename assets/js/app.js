@@ -17,9 +17,10 @@ var getFloor = (function (mod) {
     mod.setToken = function (data) {
         if (typeof data === 'Object' || typeof data === 'object') {
             var a = location.href
-            var index1 = a.indexOf('?')
+            var index1 = a.indexOf('access_token')
+           debugger
             if(index1 != -1){
-                var b = a.substr(index1+1)
+                var b = a.substr(index1)
                 var c = b.split('&')
                 for(var i=0;i<c.length;i++){
                     var arr = c[i].split('=')
@@ -28,6 +29,7 @@ var getFloor = (function (mod) {
                     }
                 }
             }
+            console.log(data);
             _userInfo = data
             saveUserInfo(data)
             localStorage.setItem('user_info', JSON.stringify(data))
@@ -111,7 +113,7 @@ var getFloor = (function (mod) {
                     '<p class="username">' + arr[i].name + '</p>' +
                     '<p class="floor">' + arr[i].number + ' 楼</p>' +
                     '</div>' +
-                    '<p class="content">诡梦墙、原创短文墙携列表各位乡亲父老，在这特殊的日子里，给大伙儿送个祝福！祝大家在2019年，大吉大利，天天吃鸡！也祝各位老板在新的一年里，万事如意，心想事成！谢谢各位老板对墙君的支持，希望来年咱们也能继续相亲相爱！</p>' +
+                    '<p class="content">各位父老乡亲们！又是新的一年啦！祝各位美梦成真，步步高升，新年新气象！</p>' +
                     '<p class="date">' + arr[i].create_time + '</p>' +
                     '</li>'
             }
@@ -122,7 +124,8 @@ var getFloor = (function (mod) {
             $('#floor_items').html(str)
         })
 
-        if (!_userInfo) return;
+        console.log(_userInfo);
+        if (!_userInfo || JSON.stringify(_userInfo) === '{}') return;
 
         if (!_userInfo.number) {
             return tipMessage('请先登录')
@@ -225,7 +228,7 @@ var getFloor = (function (mod) {
         '<p class="username">' + _userInfo.nickname + '</p>' +
         '<p class="floor">' + number + ' 楼</p>' +
         '</div>' +
-        '<p class="content">诡梦墙、原创短文墙携列表各位乡亲父老，在这特殊的日子里，给大伙儿送个祝福！祝大家在2019年，大吉大利，天天吃鸡！也祝各位老板在新的一年里，万事如意，心想事成！谢谢各位老板对墙君的支持，希望来年咱们也能继续相亲相爱！</p>' +
+        '<p class="content">各位父老乡亲们！又是新的一年啦！祝各位美梦成真，步步高升，新年新气象！</p>' +
         '<p class="date">' + newTime() + '</p>' +
         '</li>'
 

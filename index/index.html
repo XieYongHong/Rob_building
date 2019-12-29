@@ -27,10 +27,10 @@
   <!-- Tile icon for Win8 (144x144 + tile color) -->
   <meta name="msapplication-TileColor" content="#0e90d2">
   <link rel="shortcut icon" href="http://getfloor.lieqidao.club/images/get_floor.ico" type="image/x-icon">
-  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="http://getfloor.lieqidao.club/assets/css/amazeui.min.css">
   <link rel="stylesheet" href="http://at.alicdn.com/t/font_968164_olph88g6c8c.css">
-  <link rel="stylesheet" href="assets/css/app.css">
-  <link rel="stylesheet" href="assets/css/index.css">
+  <link rel="stylesheet" href="http://getfloor.lieqidao.club/assets/css/app.css">
+  <link rel="stylesheet" href="http://getfloor.lieqidao.club/assets/css/index.css">
 </head>
 
 <body>
@@ -38,9 +38,9 @@
     <!-- header -->
     <div class="header_box">
       <div class="box am-cf">
-        <img class="img" src="images/banner_03.png" alt="">
-        <img class="title" src="images/title.png" alt="">
-        <img class="logo" src="images/logo_03.png" alt="">
+        <img class="img" src="http://getfloor.lieqidao.club/images/banner_03.png" alt="">
+        <img class="title" src="http://getfloor.lieqidao.club/images/title.png" alt="">
+        <img class="logo" src="http://getfloor.lieqidao.club/images/logo_03.png" alt="">
         <a id="logout" onclick="logput()" href="#" style="position: absolute;z-index:99999; right: 0px;">登出</a>
       </div>
     </div>
@@ -187,7 +187,7 @@
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
         </div>
         <div class="am-modal-bd">
-          <img src="images/meng.jpg" alt="">
+          <img src="http://getfloor.lieqidao.club/images/meng.jpg" alt="">
         </div>
       </div>
     </div>
@@ -200,7 +200,7 @@
             <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
         </div>
         <div class="am-modal-bd">
-          <img src="images/mo.jpg" alt="">
+          <img src="http://getfloor.lieqidao.club/images/mo.jpg" alt="">
         </div>
       </div>
     </div>
@@ -253,13 +253,14 @@
       }
     }
     var userInfo = getFloor.getToken()
-    console.log(userInfo)
+    
     //弹窗调用
     if(!userInfo){
       $("#doc-modal-1").modal('open')
         QC.Login({
           btnId:'qq_login'
         },function(data,opts){
+          console.log(data)
           getFloor.setToken(data)
           $('#top_message_modal').modal('close')
           getFloor.init()
